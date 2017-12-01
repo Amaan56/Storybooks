@@ -1,0 +1,9 @@
+<div class="container">
+  <h1>Welcome</h1>
+  <p>Welcome to Storybooks</p>
+  <p>A place where you can share your story in public or completely private as your diary.</p>
+  {{#if user}}
+  {{else}}
+  <a href="/auth/google" class="btn red darken-1"><i class="fa fa-google"></i> Login with Google</a>
+  {{/if}}
+</div>
