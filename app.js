@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 var exphbs = require('express-handlebars');
 const passport = require('passport');
 const session = require('express-session');
@@ -21,6 +22,7 @@ app.set('view engine', 'handlebars');
 //Load Routes
 const auth = require('./routes/auth');
 const index = require('./routes/index');
+const stories = require('./routes/stories');
 
 //map global variables
 mongoose.Promise = global.Promise;
@@ -59,6 +61,10 @@ app.use((req, res, next) => {
 //Route Handler
 app.use('/', index);
 app.use('/auth', auth);
+app.use('/stories', stories);
+
+//Static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {

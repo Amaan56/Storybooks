@@ -3,15 +3,15 @@ var exphbs = require('express-handlebars');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('index/welcome');
+  res.render('stories/index');
 });
 
-router.get('/dashboard', (req, res) => {
-  res.render('index/dashboard');
+router.get('/add', (req, res) => {
+  res.render('stories/add');
 });
 
-router.get('/about', (req, res) => {
-  res.render('index/about');
+router.get('/show', (req, res) => {
+  res.render('stories/show');
 });
 
 module.exports = router;
