@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
 const passport = require('passport');
 const session = require('express-session');
@@ -9,14 +10,35 @@ const keys = require('./config/keys');
 
 const app = express();
 
-//Load User Model
+//BodyParser Middleware
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
+
+//Load Models
 require('./models/User');
+require('./models/Story');
+
+//Handlebars helpers
+const { truncate, stripTags, formatDate } = require('./helpers/hbs');
 
 //Passport config
 require('./config/passport')(passport);
 
 //Handlebars middleware
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.engine(
+  'handlebars',
+  exphbs({
+    helpers: {
+      truncate: truncate,
+      stripTags: stripTags,
+      formatDate: formatDate
+    },
+    defaultLayout: 'main'
+  })
+);
 app.set('view engine', 'handlebars');
 
 //Load Routes
