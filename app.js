@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+var methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
 const passport = require('passport');
@@ -10,6 +11,8 @@ const keys = require('./config/keys');
 
 const app = express();
 
+//method-override Middleware
+app.use(methodOverride('_method'));
 //BodyParser Middleware
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,7 +25,7 @@ require('./models/User');
 require('./models/Story');
 
 //Handlebars helpers
-const { truncate, stripTags, formatDate } = require('./helpers/hbs');
+const { truncate, stripTags, formatDate, select } = require('./helpers/hbs');
 
 //Passport config
 require('./config/passport')(passport);
@@ -34,7 +37,8 @@ app.engine(
     helpers: {
       truncate: truncate,
       stripTags: stripTags,
-      formatDate: formatDate
+      formatDate: formatDate,
+      select: select
     },
     defaultLayout: 'main'
   })
